@@ -38,11 +38,11 @@ COPY --chown=icecast config /home/icecast/config
 COPY --chown=icecast docker-entrypoint.sh /home/icecast/
 
 RUN chmod +x /home/icecast/docker-entrypoint.sh
+RUN chown icecast:icecast /home/icecast/docker-entrypoint.sh
 
-EXPOSE 8000
+EXPOSE 8001
 
 USER icecast
 
-ENTRYPOINT ["/home/icecast/docker-entrypoint.sh"]
-CMD ["-c", "/home/icecast/config/icecast.xml"]
+ENTRYPOINT [ "icecast", "-c", "/home/icecast/config/icecast.xml"]
 
