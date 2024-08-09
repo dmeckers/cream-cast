@@ -1,0 +1,27 @@
+version: "4.2"
+services:
+  icecast:
+    container_name: cream-cast
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./config:/home/icecast/config
+      - ./log:/home/icecast/log
+      - ./docker-entrypoint.sh:/home/icecast/docker-entrypoint.sh
+    # restart: unless-stopped
+    environment:
+      - IC_LOCATION=Universe
+      # - IC_ADMIN_EMAIL=
+      # - IC_MAX_LISTENERS=
+      # - IC_MAX_SOURCES=
+      # - IC_SOURCE_PASSWORD=
+      # - IC_RELAY_PASSWORD=
+      - IC_ADMIN_PASSWORD=hackme
+      - IC_HOSTNAME=cream.stream.io
+      # - IC_MOUNT_PASSWORD=
+      - IC_RELAY_SERVER=cream.stream.io
+    entrypoint: /home/icecast/docker-entrypoint.sh
+    command: "-c /home/icecast/config/icecast.xml"
+    ports:
+      - 8000:8000
